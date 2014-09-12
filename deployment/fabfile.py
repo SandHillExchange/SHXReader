@@ -14,6 +14,7 @@ def setup():
     sudo('apt-get update')
     sudo('apt-get install libtool autoconf automake uuid-dev build-essential lynx-cur -y')
     sudo('apt-get install python-pip -y')
+    sudo('pip install ipython')
     setup_nltk()
     setup_db()
     setup_crawl()
@@ -38,3 +39,5 @@ def setup_crawl():
     sudo('pip install selenium')
     sudo('pip install beautifulsoup4')
     sudo('pip install rq')
+    sudo('pip install rq-dashboard')
+    sudo('pip install Celery')
