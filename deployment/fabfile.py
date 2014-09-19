@@ -1,5 +1,12 @@
 """
 Setup new ubuntu 14.04 server to run SHX Reader
+
+make sure you have fabric install
+$ pip install fabric
+
+in the directory of the fabfile.py
+$ fab -H user@host setup
+to setup the host computer
 """
 from fabric.api import run, local, sudo, env
 from fabric.decorators import task, parallel
