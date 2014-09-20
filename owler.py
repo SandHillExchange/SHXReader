@@ -70,6 +70,7 @@ def get_url_from_owler_article_page(driver, url):
     script = soup.findAll('script')[-1]
     return re.search('location = "(?P<url>.+)"', str(script)).group('url')
 
+
 def main():
     driver = webdriver.PhantomJS()
 
