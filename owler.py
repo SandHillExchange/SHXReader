@@ -6,11 +6,8 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 import urllib
 import re
-
-
 import time
 import threading
-
 from functools import wraps
 
 
