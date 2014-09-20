@@ -77,7 +77,7 @@ def main():
     urls = get_owler_article_pages(driver, url)
     print urls
 
-    print get_url_from_owler_article_page(driver, url)
+    print get_url_from_owler_article_page(driver, urls[0])
 
     driver.close()
     driver.quit()
