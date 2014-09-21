@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """SHXReader
 """
 import owler.crawl as owler_crawler
