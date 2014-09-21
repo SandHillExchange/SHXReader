@@ -5,7 +5,7 @@ import json
 NEWS_UPLOAD_ENDPOINT = 'http://sandhill.exchange/news/upload'
 
 
-def upload_news(organizaton, url, headline, timestamp):
+def upload_news(organization, url, headline, timestamp):
     """Sends article information to shx
 
     Parameters

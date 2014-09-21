@@ -21,35 +21,35 @@ TIMEOUT = 10.0 # page load timeout
 
 ORGANIZATION_TO_URL = {
     # 'uber' : 'https://www.owler.com/iaApp/100242/uber-news',
-    'livingsocial' : 'https://www.owler.com/iaApp/104280/livingsocial-news',
-    'airbnb' : 'https://www.owler.com/iaApp/116231/airbnb-news',
+    # 'livingsocial' : 'https://www.owler.com/iaApp/104280/livingsocial-news',
+    # 'airbnb' : 'https://www.owler.com/iaApp/116231/airbnb-news',
     # 'lyft' : 'https://www.owler.com/iaApp/123687/lyft-news',
-    'pinterest' : 'https://www.owler.com/iaApp/111996/pinterest-news',
-    'dropbox' : 'https://www.owler.com/iaApp/101638/dropbox-news',
-    'social-finance' : 'https://www.owler.com/iaApp/1167466/social-finance-news',
-    'actifio' : 'https://www.owler.com/iaApp/123706/actifio-news',
-    'cloudera' : 'https://www.owler.com/iaApp/100508/cloudera-news',
+    # 'pinterest' : 'https://www.owler.com/iaApp/111996/pinterest-news',
+    # 'dropbox' : 'https://www.owler.com/iaApp/101638/dropbox-news',
+    # 'social-finance' : 'https://www.owler.com/iaApp/1167466/social-finance-news',
+    # 'actifio' : 'https://www.owler.com/iaApp/123706/actifio-news',
+    # 'cloudera' : 'https://www.owler.com/iaApp/100508/cloudera-news',
     # 'square' : 'https://www.owler.com/iaApp/102407/square-news',
-    'fanatics' : 'https://www.owler.com/iaApp/139262/fanatics-news',
-    'box' : 'https://www.owler.com/iaApp/102324/box-news',
+    # 'fanatics' : 'https://www.owler.com/iaApp/139262/fanatics-news',
+    # 'box' : 'https://www.owler.com/iaApp/102324/box-news',
     # 'zocdoc' : 'https://www.owler.com/iaApp/125194/zocdoc-news',
-    'jawbone' : 'https://www.owler.com/iaApp/125318/jawbone-news',
-    'adaptive-biotechnologies' : 'https://www.owler.com/iaApp/383771/adaptive-biotechnologies-news',
-    'birchbox' : 'https://www.owler.com/iaApp/100239/birchbox-news',
-    'warby-parker' : 'https://www.owler.com/iaApp/100305/warby-parker-news',
+    # 'jawbone' : 'https://www.owler.com/iaApp/125318/jawbone-news',
+    # 'adaptive-biotechnologies' : 'https://www.owler.com/iaApp/383771/adaptive-biotechnologies-news',
+    # 'birchbox' : 'https://www.owler.com/iaApp/100239/birchbox-news',
+    # 'warby-parker' : 'https://www.owler.com/iaApp/100305/warby-parker-news',
     # 'snapchat' : 'https://www.owler.com/iaApp/141188/snapchat-news',
     # 'zenefits' : 'https://www.owler.com/iaApp/217994/zenefits-news',
-    'stripe' : 'https://www.owler.com/iaApp/100441/stripe-news',
+    # 'stripe' : 'https://www.owler.com/iaApp/100441/stripe-news',
     # 'imgur' : '',
     # 'platfora' : '',
-    'optimizely' : 'https://www.owler.com/iaApp/105382/optimizely-news',
+    # 'optimizely' : 'https://www.owler.com/iaApp/105382/optimizely-news',
     # 'kno' : '',
     # 'knewton' : '',
     # 'tiny-speck' : '',
     # 'julep' : '',
     # 'twilio' : '',
-    'leap-motion' : 'https://www.owler.com/iaApp/139746/leap-motion-news',
-    'bonobos' : 'https://www.owler.com/iaApp/100338/bonobos-news',
+    # 'leap-motion' : 'https://www.owler.com/iaApp/139746/leap-motion-news',
+    # 'bonobos' : 'https://www.owler.com/iaApp/100338/bonobos-news',
     # 'sendgrid' : '',
     # 'mattermark' : '',
     # 'washio' : '',
@@ -72,13 +72,13 @@ ORGANIZATION_TO_URL = {
     # 'eventbrite' : '',
     # 'pure-storage' : '',
     # 'coursera' : '',
-    'tinder' : 'https://www.owler.com/iaApp/180478/tinder-news',
+    # 'tinder' : 'https://www.owler.com/iaApp/180478/tinder-news',
     # 'path' : '',
     # 'fastly' : '',
     # 'angellist' : '',
     # 'blue-apron' : '',
     # 'good-eggs' : '',
-    'doordash' : 'https://www.owler.com/iaApp/217990/doordash-news',
+    # 'doordash' : 'https://www.owler.com/iaApp/217990/doordash-news',
     # 'carmenta-bioscience' : '',
     # 'big-health' : '',
     # 'beepi' : '',
@@ -105,7 +105,7 @@ ORGANIZATION_TO_URL = {
     }
 
 
-@rate_limited(1)
+@rate_limited(0.5)
 def get_owler_article_pages(driver, url):
     """Get owler article url on a owler news page for a company
 
@@ -134,7 +134,7 @@ def get_owler_article_pages(driver, url):
     return urls
 
 
-@rate_limited(1)
+@rate_limited(0.5)
 def get_url_from_owler_article_page(url):
     """Get url from an owler article page
 
