@@ -36,6 +36,10 @@ def get_url_from_owler_article_page(driver, url):
     return re.search('location = "(?P<url>.+)"', str(script)).group('url')
 
 
+def run():
+    pass
+
+
 def main():
     driver = webdriver.PhantomJS()
 
