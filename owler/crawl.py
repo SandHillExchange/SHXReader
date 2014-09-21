@@ -26,8 +26,8 @@ ORGANIZATION_TO_URL = {
     # 'lyft' : 'https://www.owler.com/iaApp/123687/lyft-news',
     # 'pinterest' : 'https://www.owler.com/iaApp/111996/pinterest-news',
     # 'dropbox' : 'https://www.owler.com/iaApp/101638/dropbox-news',
-    # 'social-finance' : '',
-    # 'actifio' : '',
+    # 'social-finance' : 'https://www.owler.com/iaApp/1167466/social-finance-news',
+    # 'actifio' : 'https://www.owler.com/iaApp/123706/actifio-news',
     # 'cloudera' : '',
     # 'square' : '',
     # 'fanatics' : '',
@@ -120,7 +120,13 @@ def update_organization(driver, organization):
 
 
 def get_articles(organization):
-    pass
+    con = mdb.connect('localhost', 'shxreader', 'shxreader', 'shxreader')
+    with con:
+        cur = con.cursor(mdb.cursors.DictCursor)
+        query = "select * from owler where organization = %s"
+        cur.execute(query, (organization))
+        results = cur.fetchall()
+    return results
 
 
 def run():

@@ -1,10 +1,11 @@
 """API to send articles to shx
 """
 import requests
+import json
 NEWS_UPLOAD_ENDPOINT = 'http://sandhill.exchange/news/upload'
 
 
-def upload_news(organizaton, url, headline):
+def upload_news(organizaton, url, headline, timestamp):
     """Sends article information to shx
 
     Parameters
