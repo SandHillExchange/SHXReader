@@ -106,7 +106,7 @@ ORGANIZATION_TO_URL = {
 
 
 @rate_limited(1)
-def get_owler_article_pages(url):
+def get_owler_article_pages(driver, url):
     """Get owler article url on a owler news page for a company
 
     Parameters
@@ -135,7 +135,7 @@ def get_owler_article_pages(url):
 
 
 @rate_limited(1)
-def get_url_from_owler_article_page(driver, url):
+def get_url_from_owler_article_page(url):
     """Get url from an owler article page
 
     Parameters
@@ -149,7 +149,9 @@ def get_url_from_owler_article_page(driver, url):
     print url
     soup = BeautifulSoup(urllib.urlopen(url).read())
     script = soup.findAll('script')[-1]
-    return re.search('location = "(?P<url>.+)"', str(script)).group('url')
+    m = re.search('location = "(?P<url>.+)"', str(script))
+    if m is not None:
+        return m.group('url')
 
 
 def update_organization(driver, organization):
@@ -161,15 +163,16 @@ def update_organization(driver, organization):
         results = cur.fetchall()
         known_urls = set(r[0] for r in results)
         news_url = ORGANIZATION_TO_URL[organization]
-        urls = get_owler_article_pages(news_url)
+        urls = get_owler_article_pages(driver, news_url)
         urls.reverse()
         prepared_statement = "INSERT INTO owler VALUES (%s, %s, %s, %s, %s)"
         for owler_url, heading in urls:
             if owler_url not in known_urls:
-                article_url = get_url_from_owler_article_page(driver, owler_url)
-                timestamp = calendar.timegm(time.gmtime())
-                cur.execute(prepared_statement, (organization, owler_url, article_url, heading, timestamp))
-                con.commit()
+                article_url = get_url_from_owler_article_page(owler_url)
+                if article_url is not None:
+                    timestamp = calendar.timegm(time.gmtime())
+                    cur.execute(prepared_statement, (organization, owler_url, article_url, heading, timestamp))
+                    con.commit()
 
 
 def get_articles(organization):
