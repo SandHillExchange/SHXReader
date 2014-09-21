@@ -6,8 +6,11 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 import urllib
 import re
-import time
+import MySQLdb as mdb
 from crawler.ratelimiter import rate_limited
+
+
+ORGANIZATION_TO_URL = {'uber' : 'https://www.owler.com/iaApp/100242/uber-news'}
 
 
 @rate_limited(0.2)
@@ -28,7 +31,8 @@ def get_owler_article_pages(driver, url):
     urls = []
     for item in feed.findAll('li'):
         url = item.find('a', {'class' : 'feedTitle'})['href']
-        urls.append(url)
+        title = item.find('a', {'class':'feedTitle'}).text
+        urls.append((url, title))
     return urls
 
 
@@ -50,15 +54,27 @@ def get_url_from_owler_article_page(driver, url):
     return re.search('location = "(?P<url>.+)"', str(script)).group('url')
 
 
+def update_organization(driver, organization):
+    con = mdb.connect('localhost', 'shxreader', 'shxreader', 'shxreader')
+    with con:
+        cur = con.cursor()
+        prepared_statement = "select owler_url from owler"
+        cur.execute(prepared_statement)
+        results = cur.fetchall()
+        known_urls = set(r[0] for r in results)
+        news_url = ORGANIZATION_TO_URL[organization]
+        urls = get_owler_article_pages(driver, news_url)
+        prepared_statement = "INSERT INTO owler VALUES (%s, %s, %s, %s)"
+        for owler_url, heading in urls:
+            if owler_url not in known_urls:
+                article_url = get_url_from_owler_article_page(driver, owler_url)
+                cur.execute(prepared_statement, (organization, owler_url, article_url, heading))
+
+
 def run():
     driver = webdriver.PhantomJS()
-
-    url = 'https://www.owler.com/iaApp/100242/uber-news'
-    urls = get_owler_article_pages(driver, url)
-    print urls
-
-    print get_url_from_owler_article_page(driver, urls[0])
-
+    for organization in ORGANIZATION_TO_URL:
+        update_organization(driver, organization)
     driver.close()
     driver.quit()
 
