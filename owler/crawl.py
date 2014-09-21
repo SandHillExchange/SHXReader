@@ -7,39 +7,7 @@ from bs4 import BeautifulSoup
 import urllib
 import re
 import time
-import threading
-from functools import wraps
-
-
-def rate_limited(max_per_second):
-    """
-    Decorator that make functions not be called faster than
-    https://gist.github.com/gregburek/1441055
-    """
-    lock = threading.Lock()
-    min_interval = 1.0 / float(max_per_second)
-
-    def decorate(func):
-        last_time_called = [0.0]
-
-        @wraps(func)
-        def rate_limited_function(*args, **kwargs):
-            lock.acquire()
-            elapsed = time.clock() - last_time_called[0]
-            left_to_wait = min_interval - elapsed
-
-            if left_to_wait > 0:
-                time.sleep(left_to_wait)
-
-            lock.release()
-
-            ret = func(*args, **kwargs)
-            last_time_called[0] = time.clock()
-            return ret
-
-        return rate_limited_function
-
-    return decorate
+from crawler.ratelimiter import rate_limited
 
 
 @rate_limited(0.2)
@@ -66,10 +34,6 @@ def get_url_from_owler_article_page(driver, url):
     soup = BeautifulSoup(driver.page_source)
     script = soup.findAll('script')[-1]
     return re.search('location = "(?P<url>.+)"', str(script)).group('url')
-
-
-def post_to_shx(organizaton, url, headline):
-
 
 
 def main():
