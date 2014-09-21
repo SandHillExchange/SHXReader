@@ -4,7 +4,7 @@ import requests
 NEWS_UPLOAD_ENDPOINT = 'http://sandhill.exchange/news/upload'
 
 
-def post_to_shx(organizaton, url, headline):
+def upload_news(organizaton, url, headline):
     """Sends article information to shx
 
     Parameters
