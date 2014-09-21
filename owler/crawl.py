@@ -13,7 +13,14 @@ from crawler.ratelimiter import rate_limited
 @rate_limited(0.2)
 def get_owler_article_pages(driver, url):
     """Get owler article url on a owler news page for a company
-    example owler news url: https://www.owler.com/iaApp/100242/uber-news
+
+    Parameters
+    ----------
+    driver : WebDriver
+        webdriver, usually PhantomJS
+    url : str
+        owler news url
+        example - https://www.owler.com/iaApp/100242/uber-news
     """
     driver.get(url)
     soup = BeautifulSoup(driver.page_source)
@@ -28,7 +35,14 @@ def get_owler_article_pages(driver, url):
 @rate_limited(0.2)
 def get_url_from_owler_article_page(driver, url):
     """Get url from an owler article page
-    example owler article url: http://www.owler.com/iaApp/article/541cf77ce4b0e71dc7cd7d14.htm
+
+    Parameters
+    ----------
+    driver : WebDriver
+        webdriver, usually PhantomJS
+    url : str
+        owler article url
+        example - http://www.owler.com/iaApp/article/541cf77ce4b0e71dc7cd7d14.htm
     """
     driver.get(url)
     soup = BeautifulSoup(driver.page_source)
@@ -37,10 +51,6 @@ def get_url_from_owler_article_page(driver, url):
 
 
 def run():
-    pass
-
-
-def main():
     driver = webdriver.PhantomJS()
 
     url = 'https://www.owler.com/iaApp/100242/uber-news'
@@ -51,6 +61,10 @@ def main():
 
     driver.close()
     driver.quit()
+
+
+def main():
+    run()
 
 
 if __name__ == '__main__':
