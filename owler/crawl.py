@@ -2,6 +2,8 @@
 """Get articles from owler
 Owler puts articles behind an iframe, so it requires a few steps to get. Also it involves running the javascript
 """
+import calendar
+import time
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import urllib
@@ -64,11 +66,18 @@ def update_organization(driver, organization):
         known_urls = set(r[0] for r in results)
         news_url = ORGANIZATION_TO_URL[organization]
         urls = get_owler_article_pages(driver, news_url)
-        prepared_statement = "INSERT INTO owler VALUES (%s, %s, %s, %s)"
+        urls.reverse()
+        prepared_statement = "INSERT INTO owler VALUES (%s, %s, %s, %s, %s)"
         for owler_url, heading in urls:
             if owler_url not in known_urls:
                 article_url = get_url_from_owler_article_page(driver, owler_url)
-                cur.execute(prepared_statement, (organization, owler_url, article_url, heading))
+                timestamp = calendar.timegm(time.gmtime())
+                cur.execute(prepared_statement, (organization, owler_url, article_url, heading, timestamp))
+                cur.commit()
+
+
+def get_articles(organization):
+    pass
 
 
 def run():

@@ -6,5 +6,6 @@ CREATE TABLE owler (
 	orgnization VARCHAR(80),
 	owler_url VARCHAR(256),
 	article_url VARCHAR(256),
-    heading VARCHAR(256)
+    heading VARCHAR(256),
+    crawl_time INT
 );
