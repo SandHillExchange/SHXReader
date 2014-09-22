@@ -38,7 +38,6 @@ ORGANIZATION_TO_URL = {
     'circle': 'https://www.owler.com/iaApp/707356/circle-news',
     'cloudera': 'https://www.owler.com/iaApp/100508/cloudera-news',
     'coinbase': 'https://www.owler.com/iaApp/137494/coinbase-news',
-    'copywriter-central': '',
     'coursera': 'https://www.owler.com/iaApp/123087/coursera-news',
     'datafox': 'https://www.owler.com/iaApp/1185370/datafox-news',
     'docusign': 'https://www.owler.com/iaApp/120886/docusign-news',
@@ -86,15 +85,15 @@ ORGANIZATION_TO_URL = {
     'slack': 'https://www.owler.com/iaApp/359234/slack-news',
     'snapchat': 'https://www.owler.com/iaApp/141188/snapchat-news',
     'sofi': 'https://www.owler.com/iaApp/139446/sofi-news',
-    'sosh': 'https://www.owler.com/iaApp/358911/sosh-news',
-    'square': 'https://www.owler.com/iaApp/102407/square-news',
+    # 'sosh': 'https://www.owler.com/iaApp/358911/sosh-news',
+    # 'square': 'https://www.owler.com/iaApp/102407/square-news',
     'theranos': 'https://www.owler.com/iaApp/139733/theranos-news',
     'thrillist-com': 'https://www.owler.com/iaApp/100198/thrillist-news',
     'tinder': 'https://www.owler.com/iaApp/180478/tinder-news',
     'tiny-speck': 'https://www.owler.com/iaApp/134942/tiny-speck-news',
     'twilio': 'https://www.owler.com/iaApp/124188/twilio-news',
     'warby-parker': 'https://www.owler.com/iaApp/100305/warby-parker-news',
-    'washio': 'https://www.owler.com/iaApp/1147581/washio-news',
+    # 'washio': 'https://www.owler.com/iaApp/1147581/washio-news',
     'wealthfront': 'https://www.owler.com/iaApp/122326/wealthfront-news',
     'wefunder': 'https://www.owler.com/iaApp/110408/wefunder-news',
     'yo': 'https://www.owler.com/iaApp/1530962/yo--news',
@@ -173,7 +172,7 @@ def update_organization(driver, organization):
                 article_url = get_url_from_owler_article_page(owler_url)
                 if article_url is not None:
                     timestamp = calendar.timegm(time.gmtime())
-                    cur.execute(prepared_statement, (organization, owler_url, article_url, heading, timestamp, source, duration))
+                    cur.execute(prepared_statement, (organization, owler_url, article_url, heading, source, duration, timestamp))
                     con.commit()
 
 

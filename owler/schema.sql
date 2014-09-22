@@ -7,5 +7,7 @@ CREATE TABLE owler (
 	owler_url VARCHAR(256),
 	url VARCHAR(256),
     heading VARCHAR(256),
+    source VARCHAR(50),
+    duration VARCHAR(8),
     timestamp INT
 );

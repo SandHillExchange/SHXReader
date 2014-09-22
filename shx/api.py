@@ -5,7 +5,7 @@ import json
 NEWS_UPLOAD_ENDPOINT = 'http://sandhill.exchange/news/upload'
 
 
-def upload_news(organization, url, headline, timestamp):
+def upload_news(d):
     """Sends article information to shx
 
     Parameters
@@ -18,4 +18,4 @@ def upload_news(organization, url, headline, timestamp):
         headline to display with url
     """
     payload = locals()
-    r = requests.post(NEWS_UPLOAD_ENDPOINT, data=json.dumps(payload))
+    r = requests.post(NEWS_UPLOAD_ENDPOINT, data=json.dumps(d))
