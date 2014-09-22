@@ -20,7 +20,7 @@ TIMEOUT = 10.0 # page load timeout
 
 
 ORGANIZATION_TO_URL = {
-    'uber' : 'https://www.owler.com/iaApp/100242/uber-news',
+    # 'uber' : 'https://www.owler.com/iaApp/100242/uber-news',
     # 'livingsocial' : 'https://www.owler.com/iaApp/104280/livingsocial-news',
     # 'airbnb' : 'https://www.owler.com/iaApp/116231/airbnb-news',
     # 'lyft' : 'https://www.owler.com/iaApp/123687/lyft-news',
@@ -101,11 +101,11 @@ ORGANIZATION_TO_URL = {
     # 'appnexus' : '',
     # 'ifttt' : '',
     # 'fab-com' : '',
-    # 'datafox' : 'https://www.owler.com/iaApp/1185370/datafox-news'
+    'datafox' : 'https://www.owler.com/iaApp/1185370/datafox-news'
     }
 
 
-@rate_limited(1)
+@rate_limited(0.5)
 def get_owler_article_pages(driver, url):
     """Get owler article url on a owler news page for a company
 
@@ -117,6 +117,7 @@ def get_owler_article_pages(driver, url):
         owler news url
         example - https://www.owler.com/iaApp/100242/uber-news
     """
+    print url
     driver.get(url)
     wait = ui.WebDriverWait(driver, TIMEOUT)
     urls = []
@@ -133,8 +134,8 @@ def get_owler_article_pages(driver, url):
     return urls
 
 
-@rate_limited(1)
-def get_url_from_owler_article_page(driver, url):
+@rate_limited(0.5)
+def get_url_from_owler_article_page(url):
     """Get url from an owler article page
 
     Parameters
@@ -145,10 +146,12 @@ def get_url_from_owler_article_page(driver, url):
         owler article url
         example - http://www.owler.com/iaApp/article/541cf77ce4b0e71dc7cd7d14.htm
     """
-    driver.get(url)
-    soup = BeautifulSoup(driver.page_source)
+    print url
+    soup = BeautifulSoup(urllib.urlopen(url).read())
     script = soup.findAll('script')[-1]
-    return re.search('location = "(?P<url>.+)"', str(script)).group('url')
+    m = re.search('location = "(?P<url>.+)"', str(script))
+    if m is not None:
+        return m.group('url')
 
 
 def update_organization(driver, organization):
@@ -165,10 +168,11 @@ def update_organization(driver, organization):
         prepared_statement = "INSERT INTO owler VALUES (%s, %s, %s, %s, %s)"
         for owler_url, heading in urls:
             if owler_url not in known_urls:
-                article_url = get_url_from_owler_article_page(driver, owler_url)
-                timestamp = calendar.timegm(time.gmtime())
-                cur.execute(prepared_statement, (organization, owler_url, article_url, heading, timestamp))
-                con.commit()
+                article_url = get_url_from_owler_article_page(owler_url)
+                if article_url is not None:
+                    timestamp = calendar.timegm(time.gmtime())
+                    cur.execute(prepared_statement, (organization, owler_url, article_url, heading, timestamp))
+                    con.commit()
 
 
 def get_articles(organization):
