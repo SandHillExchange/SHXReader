@@ -128,7 +128,11 @@ def get_owler_article_pages(driver, url):
         for item in feed.findAll('li'):
             url = item.find('a', {'class' : 'feedTitle'})['href']
             title = item.find('a', {'class':'feedTitle'}).text
-            urls.append((url, title))
+
+            source = item.find('a', {'class': 'source'}).text
+            duration = item.find('span', {'class': 'duration'}).text
+
+            urls.append((url, title, source, duration))
     except TimeoutException:
         print 'timeout'
     return urls
@@ -165,13 +169,13 @@ def update_organization(driver, organization):
         news_url = ORGANIZATION_TO_URL[organization]
         urls = get_owler_article_pages(driver, news_url)
         urls.reverse()
-        prepared_statement = "INSERT INTO owler VALUES (%s, %s, %s, %s, %s)"
-        for owler_url, heading in urls:
+        prepared_statement = "INSERT INTO owler VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        for owler_url, heading, source, duration in urls:
             if owler_url not in known_urls:
                 article_url = get_url_from_owler_article_page(owler_url)
                 if article_url is not None:
                     timestamp = calendar.timegm(time.gmtime())
-                    cur.execute(prepared_statement, (organization, owler_url, article_url, heading, timestamp))
+                    cur.execute(prepared_statement, (organization, owler_url, article_url, heading, timestamp, source, duration))
                     con.commit()
 
 
