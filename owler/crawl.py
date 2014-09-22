@@ -40,10 +40,10 @@ ORGANIZATION_TO_URL = {
     # 'snapchat' : 'https://www.owler.com/iaApp/141188/snapchat-news',
     # 'zenefits' : 'https://www.owler.com/iaApp/217994/zenefits-news',
     # 'stripe' : 'https://www.owler.com/iaApp/100441/stripe-news',
-    # 'imgur' : '',
+
+    # 'imgur' : 'https://www.owler.com/iaApp/122272/imgur-news',
     # 'platfora' : '',
     # 'optimizely' : 'https://www.owler.com/iaApp/105382/optimizely-news',
-    # 'kno' : '',
     # 'knewton' : '',
     # 'tiny-speck' : '',
     # 'julep' : '',
