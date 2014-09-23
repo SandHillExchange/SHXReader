@@ -6,7 +6,7 @@ from owler.crawl import ORGANIZATION_TO_URL
 import shx.api as shx_api
 
 def run():
-    # owler_crawler.run()
+    owler_crawler.run()
     for organization in ORGANIZATION_TO_URL:
         results = owler_crawler.get_articles(organization)
         for r in results:
