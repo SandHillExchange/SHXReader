@@ -2,7 +2,7 @@
 """Get articles from owler
 Owler puts articles behind an iframe, so it requires a few steps to get. Also it involves running the javascript
 
-mysqldump -u root shxreader > shxreader_20140924.sql
+mysqldump -u root shxreader > shxreader_$(date "+%Y%m%d").sql
 """
 import calendar
 import time
