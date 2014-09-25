@@ -124,13 +124,13 @@ def get_owler_article_pages(driver, url):
         soup = BeautifulSoup(driver.page_source)
         feed = soup.find('ul', {'class': 'feeds_list'})
         for item in feed.findAll('li'):
-            url = item.find('a', {'class' : 'feedTitle'})['href']
-            title = item.find('a', {'class':'feedTitle'}).text
-
-            source = item.find('a', {'class': 'source'}).text
-            duration = item.find('span', {'class': 'duration'}).text
-
-            urls.append((url, title, source, duration))
+            article_anchor = item.find('a', {'class' : 'feedTitle'})
+            if 'href' in article_anchor.attrs:
+                url = article_anchor['href']
+                title = article_anchor.text
+                source = item.find('a', {'class': 'source'}).text
+                duration = item.find('span', {'class': 'duration'}).text
+                urls.append((url, title, source, duration))
     except TimeoutException:
         print 'timeout'
     return urls
