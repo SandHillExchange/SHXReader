@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 """Get articles from owler
 Owler puts articles behind an iframe, so it requires a few steps to get. Also it involves running the javascript
+
+mysqldump -u root shxreader > shxreader_20140924.sql
 """
 import calendar
 import time
@@ -179,7 +181,7 @@ def get_articles(organization):
     con = mdb.connect('localhost', 'shxreader', 'shxreader', 'shxreader')
     with con:
         cur = con.cursor(mdb.cursors.DictCursor)
-        query = "select * from owler where organization = %s"
+        query = "select * from owler where organization = %s and from_unixtime(timestamp)  >= ( CURDATE() - INTERVAL 3 DAY );"
         cur.execute(query, (organization))
         results = cur.fetchall()
     return results
