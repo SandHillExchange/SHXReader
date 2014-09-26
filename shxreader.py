@@ -3,7 +3,7 @@
 """
 from random import shuffle
 import owler.crawl as owler_crawler
-from owler.crawl import ORGANIZATION_TO_URL
+from owler import ORGANIZATION_TO_URL
 import shx.api as shx_api
 
 def run():
