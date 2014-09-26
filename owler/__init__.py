@@ -70,7 +70,7 @@ ORGANIZATION_TO_URL = {
     'tinder': 'https://www.owler.com/iaApp/180478/tinder-news',
     'tiny-speck': 'https://www.owler.com/iaApp/134942/tiny-speck-news',
     'twilio': 'https://www.owler.com/iaApp/124188/twilio-news',
-    'uber': 'https://www.owler.com/iaApp/100242/uber-company-profile',
+    'uber': 'https://www.owler.com/iaApp/100242/uber-news',
     'warby-parker': 'https://www.owler.com/iaApp/100305/warby-parker-news',
     'washio': 'https://www.owler.com/iaApp/1147581/washio-news',
     'wealthfront': 'https://www.owler.com/iaApp/122326/wealthfront-news',

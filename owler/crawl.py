@@ -6,13 +6,14 @@ mysqldump -u root shxreader > shxreader_$(date "+%Y%m%d").sql
 """
 import calendar
 import time
+import urllib
+import re
+from random import shuffle
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import selenium.webdriver.support.ui as ui
 from selenium.common.exceptions import TimeoutException
 from bs4 import BeautifulSoup
-import urllib
-import re
 import MySQLdb as mdb
 from crawler.ratelimiter import rate_limited
 from owler import ORGANIZATION_TO_URL
@@ -111,7 +112,9 @@ def run():
     # dcap["phantomjs.page.settings.userAgent"] = CHROME_USER_AGENT
     # driver = webdriver.PhantomJS(desired_capabilities=dcap)
     driver = webdriver.PhantomJS()
-    for organization in ORGANIZATION_TO_URL:
+    organizations = ORGANIZATION_TO_URL.keys()
+    shuffle(organizations)
+    for organization in organizations:
         update_organization(driver, organization)
     driver.close()
     driver.quit()
