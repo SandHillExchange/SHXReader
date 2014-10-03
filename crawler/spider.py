@@ -11,8 +11,18 @@ from crawler import CHROME_USER_AGENT
 SPIDER_DATA = '/mnt/shxreader/spider/data'
 
 
+def lookup_page(url):
+    con = mdb.connect('localhost', 'shxreader', 'shxreader', 'shxreader')
+    with con:
+        cur = con.cursor(mdb.cursors.DictCursor)
+        prepared_statement = "select * from crawler where url = %s"
+        r = cur.execute(prepared_statement, (url, ))
+        if r > 0:
+            return cur.fetchone()
+
+
 def crawl_page(url, user_agent=CHROME_USER_AGENT):
-    headers = { 'User-Agent': user_agent }
+    headers = {'User-Agent': user_agent}
     resp = requests.get(url, headers=headers)
     return resp.text
 
@@ -45,4 +55,5 @@ def crawl_and_store_page(url, user_agent=CHROME_USER_AGENT):
 
 
 if __name__ == '__main__':
-    crawl_and_store_page('http://stackoverflow.com/questions/2548493/in-python-after-i-insert-into-mysqldb-how-do-i-get-the-id')
+    crawl_and_store_page(
+        'http://stackoverflow.com/questions/2548493/in-python-after-i-insert-into-mysqldb-how-do-i-get-the-id')
