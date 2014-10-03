@@ -48,3 +48,8 @@ def setup_crawl():
     sudo('pip install rq')
     sudo('pip install rq-dashboard')
     sudo('pip install Celery')
+
+
+@task
+def deploy():
+    local("rsync -avc -e ssh ../../SHXReader/ pi@rp:SHXReader/ --exclude='.git/'")
