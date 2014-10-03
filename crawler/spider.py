@@ -7,7 +7,7 @@ import MySQLdb as mdb
 from crawler import CHROME_USER_AGENT
 
 
-SPIDER_DATA = '/tmp'
+SPIDER_DATA = '/mnt/shxreader/spider/data'
 
 
 def crawl_page(url, user_agent=CHROME_USER_AGENT):
