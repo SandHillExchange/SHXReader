@@ -6,6 +6,7 @@ import owler.crawl as owler_crawler
 from owler import ORGANIZATION_TO_URL
 import shx.api as shx_api
 
+
 def run():
     owler_crawler.run()
     organization = ORGANIZATION_TO_URL.keys()
