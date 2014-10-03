@@ -13,6 +13,7 @@ from fabric.decorators import task, parallel
 from fabric.colors import green, red, yellow
 from fabric.context_managers import cd
 from fabric.contrib.files import exists
+from fabric.operations import put
 
 
 @task
@@ -53,3 +54,11 @@ def setup_crawl():
 @task
 def deploy():
     local("rsync -avc -e ssh ../../SHXReader/ pi@rp:SHXReader/ --exclude='.git/'")
+
+
+@task
+def deploy_crontab():
+    put('crontab/shxreader', '/tmp/shxreader')
+    sudo('mv /tmp/shxreader /etc/cron.d/shxreader')
+    sudo('chmod 644 /etc/cron.d/shxreader')
+    sudo('chown root.root /etc/cron.d/shxreader')
