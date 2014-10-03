@@ -1,3 +1,3 @@
 SHELL=/bin/bash
 SHX_PATH=/home/pi/SHXReader
-0 12 * * * pi python ${SHX_PATH}/shxreader.py
+0 12 * * * pi python ${SHX_PATH}/shxreader.py > /home/pi/shxreader.log 2>&1
