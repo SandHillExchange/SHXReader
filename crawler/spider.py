@@ -3,6 +3,7 @@ import time
 import calendar
 import requests
 from urlparse import urlparse
+from datetime import datetime
 import MySQLdb as mdb
 from crawler import CHROME_USER_AGENT
 
@@ -23,16 +24,17 @@ def store_page(url, page_source, user_agent=CHROME_USER_AGENT):
     con = mdb.connect('localhost', 'shxreader', 'shxreader', 'shxreader')
     with con:
         cur = con.cursor()
-        prepared_statement = "insert into crawler VALUES(DEFAULT, %s, %s, %s, %s)"
+        prepared_statement = "insert into crawler VALUES(DEFAULT, %s, %s, NULL, %s, %s)"
         timestamp = calendar.timegm(time.gmtime())
         cur.execute(prepared_statement, (domain, url, user_agent, timestamp))
         page_id = cur.lastrowid
 
     # write source to file
-    directory = '%s/%s/' % (SPIDER_DATA, domain)
+    datestamp = datetime.utcnow().strftime('%Y-%m-%d')
+    directory = '%s/%s/%s/' % (SPIDER_DATA, domain, datestamp)
     if not os.path.exists(directory):
         os.makedirs(directory)
-    filename = '%s/%s/%s' % (SPIDER_DATA, domain, page_id)
+    filename = '%s/%s/%s/%s' % (SPIDER_DATA, domain, datestamp, page_id)
     with open(filename, 'w') as f:
         f.write(page_source.encode('utf-8'))
 
