@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import rss.feeds as rss_feeds
 from redis import Redis
 from rq import Queue
