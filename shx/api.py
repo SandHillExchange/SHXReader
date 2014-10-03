@@ -18,4 +18,8 @@ def upload_news(d):
         headline to display with url
     """
     payload = locals()
-    r = requests.post(NEWS_UPLOAD_ENDPOINT, data=json.dumps(d))
+    try:
+        json_data = json.dumps(d)
+    except UnicodeDecodeError:
+        json_data = json.dumps(d, ensure_ascii=False)
+    r = requests.post(NEWS_UPLOAD_ENDPOINT, data=json_data)
