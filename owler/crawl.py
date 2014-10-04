@@ -101,7 +101,7 @@ def get_articles(organization):
     con = mdb.connect('localhost', 'shxreader', 'shxreader', 'shxreader')
     with con:
         cur = con.cursor(mdb.cursors.DictCursor)
-        query = "select * from owler where organization = %s and from_unixtime(timestamp)  >= ( CURDATE() - INTERVAL 3 DAY );"
+        query = "select * from owler where organization = %s and from_unixtime(timestamp)  >= ( CURDATE() - INTERVAL 2 DAY );"
         cur.execute(query, (organization))
         results = cur.fetchall()
     return results
