@@ -50,8 +50,9 @@ def store_page(url, page_source, user_agent=CHROME_USER_AGENT):
 
 
 def crawl_and_store_page(url, user_agent=CHROME_USER_AGENT):
-    page_source = crawl_page(url, user_agent)
-    store_page(url, page_source, user_agent)
+    if lookup_page(url) is not None:
+        page_source = crawl_page(url, user_agent)
+        store_page(url, page_source, user_agent)
 
 
 if __name__ == '__main__':
