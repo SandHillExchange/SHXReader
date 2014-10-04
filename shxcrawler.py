@@ -24,10 +24,9 @@ def filter_urls(urls):
 def crawl_deeper(domain):
     results = spyder.lookup_by_domain(domain)
     known_urls = set([r['url'] for r in results])
-    urls = []
+    urls = set()
     for r in results:
-        urls.extend([url for url in spyder.get_links_by_pageid(r['id']) if url not in known_urls])
-    urls = list(set(urls))
+        urls = urls.union({url for url in spyder.get_links_by_pageid(r['id']) if url not in known_urls})
     queue_urls(urls)
 
 
