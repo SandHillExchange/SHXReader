@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 import requests
 
 
-
 def remove_query_parameters(urls):
     urls = [urlparse(u) for u in urls]
     urls = map(lambda x: x.scheme + '://' + x.netloc + x.path, urls)
