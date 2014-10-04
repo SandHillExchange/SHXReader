@@ -27,14 +27,15 @@ def crawl_deeper(domain):
     urls = set()
     for r in results:
         urls = urls.union({url for url in spyder.get_links_by_pageid(r['id']) if url not in known_urls})
-    queue_urls(urls)
+    return urls
 
 
 def main():
     print 'techcrunch'
     urls = rss_feeds.techcrunch()
     queue_urls(urls)
-    crawl_deeper('techcrunch.com')
+    urls = crawl_deeper('techcrunch.com')
+    queue_urls(urls)
 
     print 'venturebeat'
     urls = rss_feeds.venturebeat()
