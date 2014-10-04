@@ -1,19 +1,26 @@
 """RSS Feeds"""
+from urlparse import urlparse
 from bs4 import BeautifulSoup
 import requests
 
 
-def urls_from_xml_feed(url):
+def remove_query_parameters(urls):
+    urls = [urlparse(u) for u in urls]
+    urls = map(lambda x: x.scheme + '://' + x.netloc + x.path, urls)
+    return urls
+
+
+def urls_from_xml_feed(url, remove_qs=True):
     xml = BeautifulSoup(requests.get(url).text, features="xml")
     urls = [article.find('link').text for article in xml.findAll('item')]
+    if remove_qs:
+        urls = remove_query_parameters(urls)
     return urls
 
 
 def techcrunch():
     url = 'http://techcrunch.com/feed/'
-    urls = urls_from_xml_feed(url)
-    urls = [url.replace('?ncid=rss', '') for url in urls]
-    return urls
+    return urls_from_xml_feed(url)
 
 
 def venturebeat():
@@ -28,10 +35,14 @@ def hacker_news():
     return urls
 
 
+def xconomy():
+    url = 'http://www.xconomy.com/feed/'
+    return urls_from_xml_feed(url)
+
+
 def mashable():
     url = 'http://mashable.com/category/startups/rss/'
     urls = urls_from_xml_feed(url)
-    urls = [url.replace('?utm_medium=feed&utm_source=rss', '') for url in urls]
     return urls
 
 
