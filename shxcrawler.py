@@ -15,14 +15,16 @@ def queue_urls(urls):
 
 def main():
     urls = rss_feeds.techcrunch()
-    print urls
     queue_urls(urls)
 
     urls = rss_feeds.venturebeat()
+    queue_urls(urls)
 
     urls = rss_feeds.hacker_news()
+    queue_urls(urls)
 
     urls = rss_feeds.mashable()
+    queue_urls(urls)
 
 
 if __name__ == '__main__':
