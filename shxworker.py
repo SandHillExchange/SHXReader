@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 import sys
-import requests
 from rq import Queue, Connection, Worker
+
+import requests
 
 # Provide queue names to listen to as arguments to this script,
 # similar to rqworker

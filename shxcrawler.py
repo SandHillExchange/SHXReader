@@ -4,22 +4,31 @@ from redis import Redis
 from rq import Queue
 import crawler.spider as spyder
 from crawler.spider import crawl_and_store_page
+from urlparse import urlparse
+from crawler import DOMAINS_TO_IGNORE
 
 
 def queue_urls(urls):
+    urls = filter_urls(urls)
     q = Queue(connection=Redis())
     for url in urls:
         if spyder.lookup_page(url) is None:
             result = q.enqueue(crawl_and_store_page, url)
 
 
+def filter_urls(urls):
+    urls = [url for url in urls if urlparse(url).netloc not in DOMAINS_TO_IGNORE]
+    return urls
+
+
 def crawl_deeper(domain):
     results = spyder.lookup_by_domain(domain)
     known_urls = set([r['url'] for r in results])
+    urls = []
     for r in results:
-        urls = spyder.get_links_by_pageid(r['id'])
-        urls = [url for url in urls if url not in known_urls]
-        queue_urls(urls)
+        urls.extend([url for url in spyder.get_links_by_pageid(r['id']) if url not in known_urls])
+    urls = list(set(urls))
+    queue_urls(urls)
 
 
 def main():
