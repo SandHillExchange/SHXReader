@@ -17,6 +17,7 @@ STANDARD_FEEDS = {
     'beatbeat': 'http://betabeat.com/feed/',
     'fortune': 'http://fortune.com/feed/',
     'recode': 'http://recode.net/feed/',
+    'sfgate': 'http://www.sfgate.com/rss/feed/Business-and-Technology-News-448.php',
     'newyorker': 'http://www.newyorker.com/rss',
     'gizmodo': 'http://gizmodo.com/rss',
     'cnet': 'http://www.cnet.com/rss/news/',
@@ -32,6 +33,7 @@ STANDARD_FEEDS = {
     'itworld': 'http://www.itworld.com/taxonomy/term/43/all/feed?source=rss_mobile',
     'pcworld': 'http://www.pcworld.com/category/business/index.rss',
     'valleywag': 'http://valleywag.gawker.com/rss',
+    'ventureburn': 'http://feeds.feedburner.com/ventureburncom',
     # 'gigaom': 'https://gigaom.com/feed/', invalid SSL
     'wsj': 'http://online.wsj.com/xml/rss/3_7455.xml'}
 
