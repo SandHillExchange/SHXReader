@@ -34,8 +34,8 @@ def main():
     print 'techcrunch'
     urls = rss_feeds.techcrunch()
     queue_urls(urls)
-    urls = crawl_deeper('techcrunch.com')
-    queue_urls(urls)
+    # urls = crawl_deeper('techcrunch.com')
+    # queue_urls(urls)
 
     print 'venturebeat'
     urls = rss_feeds.venturebeat()

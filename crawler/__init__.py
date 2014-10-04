@@ -6,5 +6,6 @@ DOMAINS_TO_IGNORE = {
     'www.reddit.com',
     'legal.aol.com',
     'privacy.aol.com',
-    'adinfo.aol.com'
+    'adinfo.aol.com',
+    'adspecs.aol.com'
     }

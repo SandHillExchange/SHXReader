@@ -106,6 +106,14 @@ def load_page(page_id):
             return f.read()
 
 
+def get_text(soup):
+    [s.extract() for s in soup('script')]
+    text = soup.getText()
+    # cleaning
+    text = '\n'.join([l.strip() for l in text.split('\n') if len(l.strip()) > 0])
+    return text
+
+
 if __name__ == '__main__':
     crawl_and_store_page(
         'http://stackoverflow.com/questions/2548493/in-python-after-i-insert-into-mysqldb-how-do-i-get-the-id')
