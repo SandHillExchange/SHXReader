@@ -17,6 +17,21 @@ STANDARD_FEEDS = {
     'beatbeat': 'http://betabeat.com/feed/',
     'fortune': 'http://fortune.com/feed/',
     'recode': 'http://recode.net/feed/',
+    'newyorker': 'http://www.newyorker.com/rss',
+    'gizmodo': 'http://gizmodo.com/rss',
+    'cnet': 'http://www.cnet.com/rss/news/',
+    'bgr': 'http://feeds.feedburner.com/TheBoyGeniusReport',
+    'wefunder': 'https://wefunder.com/blog/feed.rss',
+    'reuters_tech': 'http://feeds.reuters.com/reuters/technologyNews',
+    'reuters_merger': 'http://feeds.reuters.com/reuters/mergersNews',
+    'reuters_deals': 'http://feeds.reuters.com/news/deals',
+    'reuters_ipo': 'http://www.reuters.com/rssFeed/newIssuesNews',
+    'bizjournals': 'http://feeds.bizjournals.com/industry_7',
+    'businessweek': 'http://www.businessweek.com/feeds/most-popular.rss',
+    'time': 'http://time.com/tech/feed/',
+    'itworld': 'http://www.itworld.com/taxonomy/term/43/all/feed?source=rss_mobile',
+    'pcworld': 'http://www.pcworld.com/category/business/index.rss',
+    'valleywag': 'http://valleywag.gawker.com/rss',
     # 'gigaom': 'https://gigaom.com/feed/', invalid SSL
     'wsj': 'http://online.wsj.com/xml/rss/3_7455.xml'}
 
