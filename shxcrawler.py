@@ -31,20 +31,14 @@ def crawl_deeper(domain):
 
 
 def main():
-    print 'techcrunch'
-    urls = rss_feeds.techcrunch()
-    queue_urls(urls)
-    # urls = crawl_deeper('techcrunch.com')
-    # queue_urls(urls)
-
-    print 'venturebeat'
-    urls = rss_feeds.venturebeat()
-    queue_urls(urls)
+    from rss import STANDARD_FEEDS
+    for k in STANDARD_FEEDS:
+        print k
+        feed_url = STANDARD_FEEDS[k]
+        urls = rss_feeds.urls_from_xml_feed(feed_url)
+        queue_urls(urls)
 
     urls = rss_feeds.hacker_news()
-    queue_urls(urls)
-
-    urls = rss_feeds.mashable()
     queue_urls(urls)
 
 
