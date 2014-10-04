@@ -15,8 +15,10 @@ def queue_urls(urls):
 
 def crawl_deeper(domain):
     results = spyder.lookup_by_domain(domain)
+    known_urls = set([r['url'] for r in results])
     for r in results:
         urls = spyder.get_links_by_pageid(r['id'])
+        urls = [url for url in urls if url not in known_urls]
         queue_urls(urls)
 
 

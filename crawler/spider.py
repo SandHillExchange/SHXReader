@@ -7,7 +7,7 @@ from datetime import datetime
 import MySQLdb as mdb
 from crawler import CHROME_USER_AGENT
 from bs4 import BeautifulSoup
-from crawler.spider.ratelimiter import rate_limited
+from crawler.ratelimiter import rate_limited
 
 
 SPIDER_DATA = '/mnt/shxreader/spider/data'
@@ -67,7 +67,7 @@ def store_page(url, page_source, user_agent=CHROME_USER_AGENT):
 
 
 def crawl_and_store_page(url, user_agent=CHROME_USER_AGENT):
-    if lookup_page(url) is not None:
+    if lookup_page(url) is None:
         page_source = crawl_page(url, user_agent)
         store_page(url, page_source, user_agent)
 
