@@ -52,6 +52,12 @@ def setup_crawl():
 
 
 @task
+def backup():
+    run('mysqldump -u root shxreader > /tmp/shxreader-$(date "+%Y%m%d").sql -p')
+    run('tar cvf /tmp/shxreader-$(date "+%Y%m%d").tar /mnt/shxreader')
+
+
+@task
 def deploy():
     local("rsync -avc -e ssh ../../SHXReader/ pi@rp:SHXReader/ --exclude='.git/'")
 

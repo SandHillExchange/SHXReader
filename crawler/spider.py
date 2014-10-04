@@ -5,6 +5,7 @@ import requests
 from urlparse import urlparse
 from datetime import datetime
 import MySQLdb as mdb
+from bz2 import BZ2File
 from crawler import CHROME_USER_AGENT
 from bs4 import BeautifulSoup
 from crawler.ratelimiter import rate_limited
@@ -14,7 +15,7 @@ SPIDER_DATA = '/mnt/shxreader/spider/data'
 
 
 def page_id_to_path(page_id, domain, timestamp):
-    return '%s/%s/%s/%s' % (SPIDER_DATA, domain, timestamp.strftime('%Y-%m-%d'), page_id)
+    return '%s/%s/%s/%s.bz2' % (SPIDER_DATA, domain, timestamp.strftime('%Y-%m-%d'), page_id)
 
 
 def lookup_page(url):
@@ -62,7 +63,7 @@ def store_page(url, page_source, user_agent=CHROME_USER_AGENT):
     if not os.path.exists(directory):
         os.makedirs(directory)
     filename = page_id_to_path(page_id, domain, timestamp)
-    with open(filename, 'w') as f:
+    with BZ2File(filename, 'w') as f:
         f.write(page_source.encode('utf-8'))
 
 
