@@ -1,4 +1,5 @@
 SHELL=/bin/bash
+PATH=/usr/local/bin/:$PATH
 SHX_PATH=/home/pi/SHXReader
 0 7,19 * * * pi cd ${SHX_PATH} && python ${SHX_PATH}/shxreader.py > /home/pi/shxreader.log 2>&1
 8 * * * * pi cd ${SHX_PATH} && python ${SHX_PATH}/shxcrawler.py > /home/pi/shxcrawler.log 2>&1
