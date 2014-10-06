@@ -1,4 +1,5 @@
 STANDARD_FEEDS = {
+    'alleywatch': 'http://www.alleywatch.com/feed/',
     'techcrunch': 'http://techcrunch.com/feed/',
     'venturebeat': 'http://venturebeat.com/feed/',
     'xconomy': 'http://www.xconomy.com/feed/',
