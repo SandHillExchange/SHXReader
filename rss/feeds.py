@@ -22,6 +22,7 @@ def hacker_news():
     url = 'https://news.ycombinator.com/rss'
     rss = BeautifulSoup(requests.get(url).text, features="xml")
     urls = [link.text for link in rss.findAll('link')]
+    urls = remove_query_parameters(urls)
     return urls
 
 
