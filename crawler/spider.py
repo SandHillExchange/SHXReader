@@ -9,6 +9,12 @@ from bz2 import BZ2File
 from crawler import CHROME_USER_AGENT
 from bs4 import BeautifulSoup
 from crawler.ratelimiter import rate_limited
+from nltk.tokenize import sent_tokenize
+from nltk.util import ngrams
+from nltk import word_tokenize
+from collections import Counter
+from nltk.corpus import stopwords
+import itertools
 
 
 SPIDER_DATA = '/mnt/shxreader/spider/data'
@@ -113,6 +119,19 @@ def get_text(soup):
     # cleaning
     text = '\n'.join([l.strip() for l in text.split('\n') if len(l.strip()) > 0])
     return text
+
+
+stop = stopwords.words('english')
+
+
+def ngram_count(text, n=1):
+    l = []
+    sentences = [sent_tokenize(s) for s in text.split('\n')]
+    sentences = itertools.chain(*sentences)
+    for s in sentences:
+        valid_grams = [' '.join(gram) for gram in ngrams(word_tokenize(s), n) if gram[0] not in stop and gram[-1] not in stop]
+        l.extend(valid_grams)
+    return l
 
 
 if __name__ == '__main__':
