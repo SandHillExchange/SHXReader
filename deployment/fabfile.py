@@ -13,6 +13,7 @@ from fabric.decorators import task, parallel
 from fabric.colors import green, red, yellow
 from fabric.context_managers import cd
 from fabric.contrib.files import exists
+from fabric.operations import put
 
 
 @task
@@ -48,3 +49,23 @@ def setup_crawl():
     sudo('pip install rq')
     sudo('pip install rq-dashboard')
     sudo('pip install Celery')
+
+
+@task
+def backup():
+    run('mysqldump -u root shxreader > /tmp/shxreader-$(date "+%Y%m%d").sql -p')
+    with cd('/mnt/shxreader'):
+        run('tar cvf /tmp/shxreader-$(date "+%Y%m%d").tar spider')
+
+
+@task
+def deploy():
+    local("rsync -avc -e ssh ../../SHXReader/ pi@rp:SHXReader/ --exclude='.git/'")
+
+
+@task
+def deploy_crontab():
+    put('crontab/shxreader', '/tmp/shxreader')
+    sudo('mv /tmp/shxreader /etc/cron.d/shxreader')
+    sudo('chmod 644 /etc/cron.d/shxreader')
+    sudo('chown root.root /etc/cron.d/shxreader')

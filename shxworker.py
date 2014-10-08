@@ -2,6 +2,8 @@
 import sys
 from rq import Queue, Connection, Worker
 
+import requests
+
 # Provide queue names to listen to as arguments to this script,
 # similar to rqworker
 with Connection():
