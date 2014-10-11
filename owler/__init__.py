@@ -38,7 +38,6 @@ ORGANIZATION_TO_URL = {
     'good-eggs': 'https://www.owler.com/iaApp/365160/good-eggs-news',
     'homejoy': 'https://www.owler.com/iaApp/183855/homejoy-news',
     'houzz': 'https://www.owler.com/iaApp/135032/houzz-news',
-    'hubspot':'https://www.owler.com/iaApp/100163/hubspot-news',
     'ifttt': 'https://www.owler.com/iaApp/125005/ifttt-news',
     'imgur': 'https://www.owler.com/iaApp/122272/imgur-news',
     'jawbone': 'https://www.owler.com/iaApp/125318/jawbone-news',
