@@ -20,7 +20,7 @@ from owler import ORGANIZATION_TO_URL
 # from crawler import CHROME_USER_AGENT
 
 
-TIMEOUT = 10.0 # page load timeout
+TIMEOUT = 10.0  # page load timeout
 
 
 @rate_limited(0.5)
@@ -44,7 +44,7 @@ def get_owler_article_pages(driver, url):
         soup = BeautifulSoup(driver.page_source)
         feed = soup.find('ul', {'class': 'feeds_list'})
         for item in feed.findAll('li'):
-            article_anchor = item.find('a', {'class' : 'feedTitle'})
+            article_anchor = item.find('a', {'class': 'feedTitle'})
             if 'href' in article_anchor.attrs:
                 url = article_anchor['href']
                 title = article_anchor.text
