@@ -49,6 +49,7 @@ def setup_crawl():
     sudo('pip install rq')
     sudo('pip install rq-dashboard')
     sudo('pip install Celery')
+    sudo('pip install birdy')
 
 
 @task
