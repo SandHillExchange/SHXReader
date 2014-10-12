@@ -5,6 +5,7 @@ import nltk
 import math
 from nltk import FreqDist, ConditionalFreqDist, ConditionalProbDist, MLEProbDist
 
+
 def pointwise_kl_divergence(word, p, q):
     prob_p = p(word)
     prob_q = q(word)
