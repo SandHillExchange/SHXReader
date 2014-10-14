@@ -3,7 +3,7 @@ STANDARD_FEEDS = {
     'alltopstartups': 'http://alltopstartups.com/feed/',
     'bbc': 'http://feeds.bbci.co.uk/news/business-11629784/rss.xml',
     'beatbeat': 'http://betabeat.com/feed/',
-    'betakit', 'http://www.betakit.com/feed/',
+    'betakit': 'http://www.betakit.com/feed/',
     'bgr': 'http://feeds.feedburner.com/TheBoyGeniusReport',
     'bizjournals': 'http://feeds.bizjournals.com/industry_7',
     'bloombergview': 'http://www.bloombergview.com/rss',
