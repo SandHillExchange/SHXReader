@@ -40,7 +40,7 @@ STANDARD_FEEDS = {
     'time': 'http://time.com/tech/feed/',
     'timesofindia': 'http://timesofindia.feedsportal.com/c/33039/f/533923/index.rss',
     'valleywag': 'http://valleywag.gawker.com/rss',
-    'venture_capital_dispatch': 'http://blogs.wsj.com/venturecapital/category/the-daily-start-up/feed/?mg=blogs-wsj&url=http%253A%252F%252Fblogs.wsj.com%252Fventurecapital%252Fcategory%252Fthe-daily-start-up%252Frss'
+    'venture_capital_dispatch': 'http://blogs.wsj.com/venturecapital/category/the-daily-start-up/feed/?mg=blogs-wsj&url=http%253A%252F%252Fblogs.wsj.com%252Fventurecapital%252Fcategory%252Fthe-daily-start-up%252Frss',
     'venturebeat': 'http://venturebeat.com/feed/',
     'ventureburn': 'http://feeds.feedburner.com/ventureburncom',
     'wefunder': 'https://wefunder.com/blog/feed.rss',
