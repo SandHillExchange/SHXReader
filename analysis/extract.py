@@ -9,7 +9,7 @@ from nltk import FreqDist, ConditionalFreqDist, ConditionalProbDist, MLEProbDist
 def pointwise_kl_divergence(word, p, q):
     prob_p = p(word)
     prob_q = q(word)
-    return prob_p * math.log(prob_p) / math.log(prob_q)
+    return prob_p * math.log(prob_p/prob_q)
 
 
 def build_language_models(corpus_words):
