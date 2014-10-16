@@ -35,24 +35,16 @@ def get_owler_article_pages(driver, url):
         owler news url
         example - https://www.owler.com/iaApp/100242/uber-news
     """
-    print url
-    driver.get(url)
-    wait = ui.WebDriverWait(driver, TIMEOUT)
-    urls = []
-    try:
-        wait.until(lambda x: driver.find_element_by_class_name('feeds_list'))
-        soup = BeautifulSoup(driver.page_source)
-        feed = soup.find('ul', {'class': 'feeds_list'})
-        for item in feed.findAll('li'):
-            article_anchor = item.find('a', {'class': 'feedTitle'})
-            if 'href' in article_anchor.attrs:
-                url = article_anchor['href']
-                title = article_anchor.text
-                source = item.find('a', {'class': 'source'}).text
-                duration = item.find('span', {'class': 'duration'}).text
-                urls.append((url, title, source, duration))
-    except TimeoutException:
-        print 'timeout'
+    soup = BeautifulSoup(urllib.urlopen(url).read())
+    feed = soup.find('ul', {'class': 'feeds_list'})
+    for item in feed.findAll('li'):
+        article_anchor = item.find('a', {'class': 'feedTitle'})
+        if 'href' in article_anchor.attrs:
+            url = article_anchor['href']
+            title = article_anchor.text
+            source = item.find('a', {'class': 'source'}).text
+            duration = item.find('span', {'class': 'duration'}).text
+            urls.append((url, title, source, duration))
     return urls
 
 
