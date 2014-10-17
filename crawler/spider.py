@@ -47,7 +47,7 @@ def lookup_by_domain(domain):
 @rate_limited(1)
 def crawl_page(url, user_agent=CHROME_USER_AGENT):
     headers = {'User-Agent': user_agent}
-    resp = requests.get(url, headers=headers)
+    resp = requests.get(url, headers=headers)  # ignore SSLError
     return resp.text
 
 

@@ -38,7 +38,7 @@ def get_owler_article_pages(url):
     try:
         soup = BeautifulSoup(urllib.urlopen(url).read())
         feed = soup.find('ul', {'class': 'feeds_list'})
-        if feed.findAll('li') is None:
+        if feed is None:
             return urls
         for item in feed.findAll('li'):
             article_anchor = item.find('a', {'class': 'feedTitle'})
@@ -112,8 +112,6 @@ def run():
     shuffle(organizations)
     for organization in organizations:
         update_organization(organization)
-    driver.close()
-    driver.quit()
 
 
 def main():

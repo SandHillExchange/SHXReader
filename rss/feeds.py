@@ -11,7 +11,7 @@ def remove_query_parameters(urls):
 
 
 def urls_from_xml_feed(url, remove_qs=True):
-    xml = BeautifulSoup(requests.get(url).text, features="xml")
+    xml = BeautifulSoup(requests.get(url, verify=False).text, features="xml")
     urls = [article.find('link').text.strip() for article in xml.findAll('item')]
     if remove_qs:
         urls = remove_query_parameters(urls)
