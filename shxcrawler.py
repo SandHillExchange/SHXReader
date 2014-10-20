@@ -6,10 +6,6 @@ import crawler.spider as spyder
 from crawler.spider import crawl_and_store_page
 from urlparse import urlparse
 from crawler import DOMAINS_TO_IGNORE
-import threading
-
-
-MAX_THREADS = 4*4
 
 
 def queue_urls(urls):
@@ -35,22 +31,12 @@ def crawl_deeper(domain):
 
 
 def main():
-    def worker(sema, url):
-        sema.acquire()
-        urls = rss_feeds.urls_from_xml_feed(feed_url)
-        queue_urls(urls)
-        sema.release()
-
     from rss import STANDARD_FEEDS
-    pool_sema = BoundedSemaphore(MAX_THREADS)
-    threads = []
     for k in STANDARD_FEEDS:
         print k
         feed_url = STANDARD_FEEDS[k]
-        t = threading.Thread(target=worker, args=(pool_sema, feed_url)
-        t.start()
-        threads.append(t)
-    [t.join() for t in threads]
+        urls = rss_feeds.urls_from_xml_feed(feed_url)
+        queue_urls(urls)
 
 
     urls = rss_feeds.hacker_news()
