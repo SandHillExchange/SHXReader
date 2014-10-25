@@ -162,6 +162,8 @@ def update_funding_round(cur, uuid, updated_at):
     if fetch:
         # new entry
         d = fetch_funding_round(uuid)
+        if 'properties' not in d['data']:
+            return
         last_updated = d['data']['properties']['updated_at']
         cur.execute("INSERT INTO funding_round (uuid, last_updated, data) values (%s, %s, %s) ON DUPLICATE KEY UPDATE last_updated=VALUES(last_updated), data=VALUES(data)", (uuid, last_updated, json.dumps(d)))
 

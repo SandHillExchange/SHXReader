@@ -31,11 +31,12 @@ def setup():
 @task
 def setup_nltk():
     sudo('pip install nltk')
+    run("""python -c 'import nltk; nltk.download("all-corpora")'""")
 
 
 @task
 def setup_db():
-    sudo('apt-get install mariadb-server -y')
+    sudo('apt-get install mysql-server  -y')
     sudo('apt-get install python-mysqldb -y')
     sudo('apt-get install redis-server -y')
 
