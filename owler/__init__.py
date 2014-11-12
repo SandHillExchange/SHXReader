@@ -33,7 +33,6 @@ ORGANIZATION_TO_URL = {
     'eventbrite': 'https://www.owler.com/iaApp/100125/eventbrite-news',
     'fab-com': 'https://www.owler.com/iaApp/101152/fab-news',
     'fastly': 'https://www.owler.com/iaApp/172675/fastly-news',
-    'flipkart': 'https://www.owler.com/iaApp/139206/flipkart-news',
     'github': 'https://www.owler.com/iaApp/128666/github-news',
     'good-eggs': 'https://www.owler.com/iaApp/365160/good-eggs-news',
     'homejoy': 'https://www.owler.com/iaApp/183855/homejoy-news',
