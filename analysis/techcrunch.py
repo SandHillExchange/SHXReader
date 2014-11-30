@@ -1,10 +1,10 @@
 
 # coding: utf-8
 
-# In[34]:
+# In[373]:
 
 import nltk
-from nltk.tokenize import sent_tokenize
+from nltk.tokenize import sent_tokenize 
 from nltk.util import ngrams
 from nltk import word_tokenize
 from collections import Counter
@@ -18,7 +18,7 @@ import random
 import re
 
 
-# In[92]:
+# In[374]:
 
 def extract(soup):
     d = {}
@@ -40,14 +40,14 @@ def extract(soup):
     return d
 
 
-# In[26]:
+# In[375]:
 
 filename = random.choice(os.listdir('/tmp/techcrunch.com/2014-10-04/'))
 with BZ2File('/tmp/techcrunch.com/2014-10-04/' + filename) as f:
     soup = BeautifulSoup(f.read())
 
 
-# In[93]:
+# In[376]:
 
 pages_text = extract(soup)
 with open('/tmp/soup.html', 'w') as f:
@@ -55,7 +55,7 @@ with open('/tmp/soup.html', 'w') as f:
 print pages_text['text']
 
 
-# In[149]:
+# In[ ]:
 
 pages = {}
 for dirpath, dirnames, filenames in os.walk('/tmp/techcrunch.com/'):
@@ -68,7 +68,7 @@ for dirpath, dirnames, filenames in os.walk('/tmp/techcrunch.com/'):
                 pages[d['canonical_url']] = d
 
 
-# In[281]:
+# In[ ]:
 
 GOLDEN_FUNDING_SET = {
     'http://techcrunch.com/2013/10/08/luminate-health-raises-1m-to-make-patient-lab-results-comprehensible/': True,
@@ -101,11 +101,19 @@ GOLDEN_FUNDING_SET = {
     'http://techcrunch.com/2014/10/11/navigating-the-entrepreneurs-path/': False,
     'http://techcrunch.com/2014/10/07/yahoo-lays-off-employees-in-india-reportedly-up-to-2000-affected/': False,
     'http://techcrunch.com/2014/11/04/dasher-teams-up-with-venmo-to-bring-peer-to-peer-payments-to-its-messaging-app/': False,
-    'http://techcrunch.com/2014/11/20/fastpay-funding-2/': True
+    'http://techcrunch.com/2014/11/20/fastpay-funding-2/': True,
+    'http://techcrunch.com/2014/11/12/microsoft-updates-visual-studio-2013-previews-next-major-release/': False,
+    'http://techcrunch.com/2014/11/05/encoding-com-harmonic/': True,
+    'http://techcrunch.com/2014/11/18/you-say-zomato/': True,
+    'http://techcrunch.com/2014/11/13/kanvas-debuts-an-ios-keyboard-that-lets-you-send-decorated-photos-stickers-and-gifs-or-even-just-text/': False,
+    'http://techcrunch.com/2014/11/04/checkoutsmart/' : True, 
+    'http://techcrunch.com/2014/11/19/airware-ge/': True,
+    'http://techcrunch.com/2014/11/09/99co/': True,
+    'http://techcrunch.com/2014/11/10/coca-cola-hopes-its-startup-incubator-is-the-real-thing/': False,
 }
 
 
-# In[282]:
+# In[ ]:
 
 def funding_features(article):
     title = article['title']
@@ -116,16 +124,27 @@ def funding_features(article):
     if re.search('raises', title.lower()) is not None:
         d['title_has(raises)'] = True
     c = Counter(nltk.word_tokenize(article_lowercase.decode('utf-8')))
-    words = ['funding', 'investment', 'million', 'capital', 'raise',
+    words = ['funding', 'investment', 'million', 'capital', 'raise', 
+             'acquires',
+             'acquisition',
+             'announced',
+             'co-founder',
              'users',
+             'download',
+             'strategic',
+             'project',
              'raised', 'talk', 'round', 'seed', 'layoffs', 'i', 'you', 'cuts']
     for w in words:
-        d['count(' + w + ')'] = c.get(w, 0)
-    d['length'] = len(article_lowercase)
+        d['has(' + w + ')'] = w in c
+    N = len(article_lowercase)
+    d['length(<250)'] = True if N < 250 else False
+    d['length(<500)'] = True if N < 500 else False
+    d['length(<750)'] = True if N < 750 else False
+    d['length(<1000)'] = True if N < 100 else False
     return d
 
 
-# In[283]:
+# In[ ]:
 
 featuresets = [(funding_features(pages[url]), GOLDEN_FUNDING_SET[url]) for url in GOLDEN_FUNDING_SET]
 random.shuffle(featuresets)
@@ -134,7 +153,7 @@ classifier = nltk.NaiveBayesClassifier.train(train_set)
 print(nltk.classify.accuracy(classifier, test_set))
 
 
-# In[284]:
+# In[ ]:
 
 #classifier.classify(funding_features(pages['http://techcrunch.com/2014/09/30/reddit-fundraising/']))
 url = 'http://techcrunch.com/2014/07/29/fly-or-die-tinder-moments/'
@@ -146,7 +165,7 @@ print url, funding_features(pages[url])
 classifier.classify(funding_features(pages[url]))
 
 
-# In[285]:
+# In[ ]:
 
 for url in pages:
     if 'text' in pages[url]:
@@ -154,30 +173,9 @@ for url in pages:
             print url
 
 
-# In[125]:
-
-t = pages['http://techcrunch.com/2013/12/06/play-i-raises-1-4m-from-the-crowd-for-toy-robots-that-make-programming-kid-friendly-will-hit-stores-near-you-next-summer/']['text']
-
-
-# In[170]:
-
-for url in pages:
-    if 'text' in pages[url]:
-        f = funding_features(pages[url])
-        if f['count(funding)'] > 0 and 'raises' not in pages[url]['title'].lower():
-            print url, f
-
-
-# In[171]:
-
-
-funding_features(pages[url])
-
-
-# In[288]:
+# In[ ]:
 
 filename = random.choice([os.path.join(dirpath, name) for dirpath, dirnames, filenames in os.walk('/tmp/techcrunch.com/')     for name in filenames])
-
 
 with BZ2File(filename) as f:
     soup = BeautifulSoup(f.read())
@@ -185,14 +183,9 @@ with BZ2File(filename) as f:
 funding_features(d), d['canonical_url']
 
 
-# In[276]:
-
-len(d['text'])
-
-
 # In[ ]:
 
-
+classifier.show_most_informative_features(10)
 
 
 # In[ ]:
