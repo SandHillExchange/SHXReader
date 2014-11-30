@@ -55,7 +55,7 @@ with open('/tmp/soup.html', 'w') as f:
 print pages_text['text']
 
 
-# In[ ]:
+# In[377]:
 
 pages = {}
 for dirpath, dirnames, filenames in os.walk('/tmp/techcrunch.com/'):
@@ -68,7 +68,7 @@ for dirpath, dirnames, filenames in os.walk('/tmp/techcrunch.com/'):
                 pages[d['canonical_url']] = d
 
 
-# In[ ]:
+# In[549]:
 
 GOLDEN_FUNDING_SET = {
     'http://techcrunch.com/2013/10/08/luminate-health-raises-1m-to-make-patient-lab-results-comprehensible/': True,
@@ -110,41 +110,66 @@ GOLDEN_FUNDING_SET = {
     'http://techcrunch.com/2014/11/19/airware-ge/': True,
     'http://techcrunch.com/2014/11/09/99co/': True,
     'http://techcrunch.com/2014/11/10/coca-cola-hopes-its-startup-incubator-is-the-real-thing/': False,
+    'http://techcrunch.com/2014/11/14/coinbase-desparately-seeking-series-c/': True,
+    'http://techcrunch.com/2014/10/22/amazon-gets-more-enterprise-friendly-with-launch-of-aws-directory-service/': False,
+    'http://techcrunch.com/2014/11/10/microsoft-office-apps-skyrocket-to-the-top-of-the-app-store-following-pricing-changes/':False,
+    'http://techcrunch.com/2014/10/19/psa-you-wont-be-able-to-upgrade-the-new-mac-minis-ram-yourself/': False,
+    'http://techcrunch.com/2014/11/04/chosen/': True,
+    'http://techcrunch.com/2014/11/20/following-pressure-from-u-s-senate-uber-hires-data-privacy-expert-to-review-companys-policies/': False,
+    'http://techcrunch.com/2014/11/12/vida-raises-1-3-million-for-socially-responsible-e-commerce/': True,
+    'http://techcrunch.com/2014/10/05/pay-with-facebook-messenger/': False,
+    'http://techcrunch.com/2014/10/06/ebay-to-host-live-art-auctions-on-new-site/': False,
+    'http://techcrunch.com/2014/10/11/8-things-about-hardware-crowdfunding-we-learned-from-20-campaigns/': False,
+    'http://techcrunch.com/2014/11/13/tubemogul-soars-14-after-reporting-strong-q3-revenue-of-27-4m-smaller-than-expected-loss/': False,
+    'http://techcrunch.com/2014/10/20/grabtaxi-raises-65-million-to-increase-the-competition-with-uber-in-southeast-asia/': True,
+    'http://techcrunch.com/2014/10/28/the-us-breeds-the-most-unicorns-but-the-rest-of-the-world-is-catching-up/': False,
+    'http://techcrunch.com/2014/10/16/twitpic-couldnt-find-an-acquirer-will-shut-down-after-all-on-oct-25th/': False,
+    'http://techcrunch.com/2014/10/07/israeli-startup-scene-thriving-despite-conflict/': False,
 }
 
 
-# In[ ]:
+# In[550]:
 
 def funding_features(article):
     title = article['title']
     d = {'has(series)': False, 'title_has(raises)': False}
     article_lowercase = article['text'].lower()
+    d['title_starts_with(number)'] = True if re.match('\d', title) else False
     if re.search('series \w', article_lowercase) is not None:
         d['has(series)'] = True
     if re.search('raises', title.lower()) is not None:
         d['title_has(raises)'] = True
-    c = Counter(nltk.word_tokenize(article_lowercase.decode('utf-8')))
+    unigrams = nltk.word_tokenize(article_lowercase.decode('utf-8'))
+    c = Counter(unigrams)
     words = ['funding', 'investment', 'million', 'capital', 'raise', 
-             'acquires',
+             'acquires','customer','support','shipping',
              'acquisition',
              'announced',
              'co-founder',
              'users',
              'download',
+             'companies', 'businesses','report','trend','data','region',
              'strategic',
-             'project',
-             'raised', 'talk', 'round', 'seed', 'layoffs', 'i', 'you', 'cuts']
+             'project','raising',
+             'raised', 'talk', 'round', 'seed', 
+             'angel','angels','investor','investors',
+              'trading','shares','analyst','expectations',
+              'valulation','venture',
+              'free', 'partners','scientists','developer',
+             'layoffs', 'i', 'you', 'cuts', 'app', 'billion', 'upgrade','facebook','ceo']
     for w in words:
         d['has(' + w + ')'] = w in c
-    N = len(article_lowercase)
+    N = len(unigrams)
     d['length(<250)'] = True if N < 250 else False
-    d['length(<500)'] = True if N < 500 else False
-    d['length(<750)'] = True if N < 750 else False
-    d['length(<1000)'] = True if N < 100 else False
+    d['length(250-350)'] = True if N >= 250 and N < 350 else False
+    d['length(350-500)'] = True if N >= 350 and N < 500 else False
+    d['length(500-750)'] = True if N >= 500 and N < 750 else False
+    d['length(750-1000)'] = True if N >= 750 and N < 1000 else False
+    d['length(1000+)'] = True if N >= 1000 else False
     return d
 
 
-# In[ ]:
+# In[551]:
 
 featuresets = [(funding_features(pages[url]), GOLDEN_FUNDING_SET[url]) for url in GOLDEN_FUNDING_SET]
 random.shuffle(featuresets)
@@ -153,39 +178,35 @@ classifier = nltk.NaiveBayesClassifier.train(train_set)
 print(nltk.classify.accuracy(classifier, test_set))
 
 
-# In[ ]:
+# In[552]:
 
-#classifier.classify(funding_features(pages['http://techcrunch.com/2014/09/30/reddit-fundraising/']))
-url = 'http://techcrunch.com/2014/07/29/fly-or-die-tinder-moments/'
-url = 'http://techcrunch.com/2014/10/04/online-native-ads-are-held-to-higher-standards-than-those-on-tv/'
-# url = 'http://techcrunch.com/video/foursquare-fly-or-die/518365483/'
-url = 'http://techcrunch.com/2014/07/29/fly-or-die-tinder-moments/'
-url = 'http://techcrunch.com/2014/11/04/the-backbone-of-american-elections-pen-and-paper/'
-print url, funding_features(pages[url])
-classifier.classify(funding_features(pages[url]))
+urls = [url for url in pages if 'text' in pages[url] and classifier.classify(funding_features(pages[url]))]
+print len(urls)
 
 
-# In[ ]:
+# In[553]:
 
-for url in pages:
-    if 'text' in pages[url]:
-        if classifier.classify(funding_features(pages[url])):
-            print url
+random.sample(urls, 10)
 
 
-# In[ ]:
+# In[542]:
 
 filename = random.choice([os.path.join(dirpath, name) for dirpath, dirnames, filenames in os.walk('/tmp/techcrunch.com/')     for name in filenames])
 
 with BZ2File(filename) as f:
     soup = BeautifulSoup(f.read())
     d = extract(soup)
-funding_features(d), d['canonical_url']
+d['canonical_url'], classifier.classify(funding_features(d)), funding_features(d),
 
 
-# In[ ]:
+# In[538]:
 
 classifier.show_most_informative_features(10)
+
+
+# In[543]:
+
+len(pages)
 
 
 # In[ ]:
