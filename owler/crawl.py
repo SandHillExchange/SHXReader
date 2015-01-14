@@ -20,39 +20,36 @@ from owler import ORGANIZATION_TO_URL
 # from crawler import CHROME_USER_AGENT
 
 
-TIMEOUT = 10.0 # page load timeout
+TIMEOUT = 10.0  # page load timeout
 
 
 @rate_limited(0.5)
-def get_owler_article_pages(driver, url):
+def get_owler_article_pages(url):
     """Get owler article url on a owler news page for a company
 
     Parameters
     ----------
-    driver : WebDriver
-        webdriver, usually PhantomJS
     url : str
         owler news url
         example - https://www.owler.com/iaApp/100242/uber-news
     """
     print url
-    driver.get(url)
-    wait = ui.WebDriverWait(driver, TIMEOUT)
     urls = []
     try:
-        wait.until(lambda x: driver.find_element_by_class_name('feeds_list'))
-        soup = BeautifulSoup(driver.page_source)
+        soup = BeautifulSoup(urllib.urlopen(url).read())
         feed = soup.find('ul', {'class': 'feeds_list'})
+        if feed is None:
+            return urls
         for item in feed.findAll('li'):
-            article_anchor = item.find('a', {'class' : 'feedTitle'})
+            article_anchor = item.find('a', {'class': 'feedTitle'})
             if 'href' in article_anchor.attrs:
                 url = article_anchor['href']
                 title = article_anchor.text
                 source = item.find('a', {'class': 'source'}).text
                 duration = item.find('span', {'class': 'duration'}).text
                 urls.append((url, title, source, duration))
-    except TimeoutException:
-        print 'timeout'
+    except IOError, AttributeError:
+        print 'Error with ' + url
     return urls
 
 
@@ -69,14 +66,17 @@ def get_url_from_owler_article_page(url):
         example - http://www.owler.com/iaApp/article/541cf77ce4b0e71dc7cd7d14.htm
     """
     print url
-    soup = BeautifulSoup(urllib.urlopen(url).read())
-    script = soup.findAll('script')[-1]
-    m = re.search('location = "(?P<url>.+)"', str(script))
-    if m is not None:
-        return m.group('url')
+    try:
+        soup = BeautifulSoup(urllib.urlopen(url).read())
+        script = soup.findAll('script')[-1]
+        m = re.search('location = "(?P<url>.+)"', str(script))
+        if m is not None:
+            return m.group('url')
+    except IOError:
+        print 'Error with ' + url
 
 
-def update_organization(driver, organization):
+def update_organization(organization):
     con = mdb.connect('localhost', 'shxreader', 'shxreader', 'shxreader')
     with con:
         cur = con.cursor()
@@ -85,7 +85,7 @@ def update_organization(driver, organization):
         results = cur.fetchall()
         known_urls = set(r[0] for r in results)
         news_url = ORGANIZATION_TO_URL[organization]
-        urls = get_owler_article_pages(driver, news_url)
+        urls = get_owler_article_pages(news_url)
         urls.reverse()
         prepared_statement = "INSERT INTO owler VALUES (%s, %s, %s, %s, %s, %s, %s)"
         for owler_url, heading, source, duration in urls:
@@ -108,16 +108,10 @@ def get_articles(organization):
 
 
 def run():
-    # dcap = dict(DesiredCapabilities.PHANTOMJS)
-    # dcap["phantomjs.page.settings.userAgent"] = CHROME_USER_AGENT
-    # driver = webdriver.PhantomJS(desired_capabilities=dcap)
-    driver = webdriver.PhantomJS()
     organizations = ORGANIZATION_TO_URL.keys()
     shuffle(organizations)
     for organization in organizations:
-        update_organization(driver, organization)
-    driver.close()
-    driver.quit()
+        update_organization(organization)
 
 
 def main():

@@ -38,6 +38,7 @@ def main():
         urls = rss_feeds.urls_from_xml_feed(feed_url)
         queue_urls(urls)
 
+
     urls = rss_feeds.hacker_news()
     queue_urls(urls)
 
