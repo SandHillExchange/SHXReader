@@ -69,6 +69,8 @@ ORGANIZATION_TO_URL = {
      'angellist': 'https://www.owler.com/iaApp/116312/angellist-news',
      'wefunder': 'https://www.owler.com/iaApp/110408/wefunder-news',
      'fundersclub': 'https://www.owler.com/iaApp/125972/fundersclub-news',
+     'circleup': 'https://www.owler.com/iaApp/126211/circleup-news',
+     'kabbage': 'https://www.owler.com/iaApp/125068/kabbage-news',
 
 
 #    'actifio': 'https://www.owler.com/iaApp/123706/actifio-news',
