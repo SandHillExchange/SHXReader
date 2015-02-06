@@ -59,7 +59,7 @@ ORGANIZATION_TO_URL = {
      'theranos': 'https://www.owler.com/iaApp/139733/theranos-news',
      'zocdoc': 'https://www.owler.com/iaApp/125194/zocdoc-news',
      '23andme': 'https://www.owler.com/iaApp/100222/23andme-news',
-     'counsyl': 'https://www.owler.com/iaApp/100227/counsyl-news'
+     'counsyl': 'https://www.owler.com/iaApp/100227/counsyl-news',
 
      'uber': 'https://www.owler.com/iaApp/100242/uber-news',
      'instacart': 'https://www.owler.com/iaApp/137503/instacart-news',
