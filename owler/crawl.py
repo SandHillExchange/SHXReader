@@ -68,9 +68,10 @@ def get_url_from_owler_article_page(url):
     print url
     try:
         soup = BeautifulSoup(urllib.urlopen(url).read())
-        src = soup.find('iframe')['src']
-        if src is not None:
-            return src
+        if soup.find('iframe'):
+            src = soup.find('iframe')['src']
+            if src is not None:
+                return src
         for script in soup.findAll('script'):
             m = re.search('location = "(?P<url>.+)"', str(script))
             if m is not None:
