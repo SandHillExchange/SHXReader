@@ -57,7 +57,7 @@ ORGANIZATION_TO_URL = {
      'metamind': 'https://www.owler.com/iaApp/2233287/meta-mind-news',
 
      'theranos': 'https://www.owler.com/iaApp/139733/theranos-news',
-     'zocdoc': 'https://www.owler.com/iaApp/125194/zocdoc-news'
+     'zocdoc': 'https://www.owler.com/iaApp/125194/zocdoc-news',
      '23andme': 'https://www.owler.com/iaApp/100222/23andme-news',
      'counsyl': 'https://www.owler.com/iaApp/100227/counsyl-news'
 
