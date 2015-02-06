@@ -71,7 +71,7 @@ def get_url_from_owler_article_page(url):
         src = soup.find('iframe')['src']
         if src is not None:
             return src
-        for script =in soup.findAll('script'):
+        for script in soup.findAll('script'):
             m = re.search('location = "(?P<url>.+)"', str(script))
             if m is not None:
                 return m.group('url')
