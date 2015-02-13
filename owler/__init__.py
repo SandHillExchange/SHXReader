@@ -50,7 +50,7 @@ ORGANIZATION_TO_URL = {
      'reddit':'https://www.owler.com/iaApp/104254/reddit-news',
      'weebly': 'https://www.owler.com/iaApp/114835/weebly-news',
 
-     'ifttt': 'https://www.owler.com/iaApp/125005/ifttt-news',
+     'if-this-then-that': 'https://www.owler.com/iaApp/125005/ifttt-news',
      'mongodb-inc': 'https://www.owler.com/iaApp/125134/mongodb-news',
      'github': 'https://www.owler.com/iaApp/128666/github-news',
      'indico': 'https://www.owler.com/iaApp/1868063/indico-news',
