@@ -7,7 +7,7 @@ ORGANIZATION_TO_URL = {
      'wealthfront': 'https://www.owler.com/iaApp/122326/wealthfront-news',
      'datafox': 'https://www.owler.com/iaApp/1185370/datafox-news',
      'estimize': 'https://www.owler.com/iaApp/100436/estimize-news',
-     'robinhood': 'https://www.owler.com/iaApp/1618520/robinhood-news',
+     'analyst': 'https://www.owler.com/iaApp/1618520/robinhood-news',
 
      'lyft':'https://www.owler.com/iaApp/123687/lyft-news',
      'beepi': 'https://www.owler.com/iaApp/1395944/beepi-news',
