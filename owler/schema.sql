@@ -2,6 +2,10 @@ CREATE USER 'shxreader'@'localhost' IDENTIFIED BY 'shxreader';
 
 GRANT ALL ON shxreader.* TO 'shxreader'@'localhost';
 
+CREATE DATABASE shxreader;
+
+use shxreader;
+
 CREATE TABLE owler (
 	organization VARCHAR(80),
 	owler_url VARCHAR(256),
